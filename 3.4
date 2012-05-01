@@ -1,0 +1,27 @@
+#lang racket
+
+(define (make-account balance password)
+	(let ((init 0))
+	(define (withdraw amount)
+		(if (>= balance amount)
+			(begin (set! balance (- balance amount))
+				balance)
+			"Insufficent Funds"))
+	(define (deposit amount)
+		(set! balance (+ balance amount))
+		balance)
+	(define (dispatch pass m)
+		(if (not (eq? pass password)) 
+			(if (> init 6) 
+				(begin 
+					(set! password gensym)
+					(error "COPS CALLED PASSWORD RESET"))
+			(begin 
+				(set! init (+ init 1))
+				(error "BAD PASSWORD" pass))
+		(cond ((eq? m 'withdraw) withdraw)
+				((eq? m 'deposit) deposit)
+				(else ((error "Unknown request- -- MAKE ACCOUNT" m)))))))
+	dispatch)
+		
+	
