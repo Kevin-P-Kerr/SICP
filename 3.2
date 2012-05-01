@@ -1,0 +1,10 @@
+#lang racket
+
+(define (make-monitored proc)
+	(let ((counter 0))
+	(lambda (arg)
+		(if (eq? arg 'how-many-calls?)
+			(print counter)
+		(begin
+			(set! counter (+ counter 1))
+			(proc arg))))))
