@@ -1,0 +1,16 @@
+#lang racket
+
+(define (new-rand-gen init)
+          (lambda (sym)
+	(define (generate)
+		(random init))
+	(define (reset new-val)
+		(set! init new-val))
+	(define (dispatch m)
+		(cond ((eq? m 'generate) (generate))
+			((eq? m 'reset) reset)
+			(else (print "new-rand: symbol unknown"))))
+	(dispatch sym)))
+
+(define new-rand (new-rand-gen 100))
+ 
